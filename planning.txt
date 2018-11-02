@@ -1,0 +1,36 @@
+
+
+
+
+todo;
+
+rename the collection in the app.js and newServer.js files to Articles or Notes
+
+
+
+
+
+
+
+
+
+
+
+article scraper
+
+pick site to scrape....
+
+
+use request to get html from page (do this on page load)
+use cheerio to access the data
+use mongo / mongoose to push data to the database
+use get request to pull articles from database with an on click
+
+
+use on click to save the article to your favorites
+    - create a column named favorite: false/true
+    - db query will use this column to return a search of favorites
+
+use on click to reference the article id and save comments to the document in the database
+use on click to delete the comments from the article id in the database
+

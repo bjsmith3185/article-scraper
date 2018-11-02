@@ -1,0 +1,72 @@
+.active {
+  color: #ee6e73;
+  font-weight: 300;
+}
+
+.results_area {
+  /* margin-right: 50px;
+  margin-left: 50px; */
+  margin-top: 25px;
+  background: rgb(230, 221, 221);
+  border: 2px solid black;
+}
+
+.results {
+  font-size: 16px;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+.article-area {
+  padding: 20px;
+}
+
+.save {
+  color: blue;
+}
+
+.save:hover {
+  color: purple;
+}
+
+
+/* Note css area */
+
+.input-title {
+  width: 90%;
+
+}
+
+.input-body {
+  width: 90%;
+}
+
+.delete-note-btn {
+  margin-top: 10px;
+  color: red;
+
+}
+
+.save-note {
+  margin-top: 15px;
+  color: green;
+}
+
+
+
+
+
+.footer {
+  
+   height:60px;   /* Height of the footer */
+   background:#6cf;
+
+   position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    
+    color: white;
+
+}
