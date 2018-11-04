@@ -31,40 +31,117 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost/homework18db", { useNewUrlParser: true });
 
 // Routes
+app.get("/scrape", function(req, res) {
+// function checkfordatabase() {
+   
+    db.Article.count().then((count) => {
+        console.log(` The number of articles in the database is : ${count}`)
+        if (count) {
+            console.log("true") // collection already exists
+            axios.get("https://www.charlotteobserver.com/").then(function (response) {
+
+                var $ = cheerio.load(response.data);
+                // console.log(response.data);
+        
+                $(".title-link-timestamp-macro ").each(function (i, element) {
+                    var title = $(element).find("a").text().trim();
+                    var link = $(element).find("a").attr("href");
+                    var time = $(element).find("time").text().trim();
+                    // console.log(`this is the title: ${title} at index ${i}.`)
+        
+                    var insertData = {
+                        title: title,
+                        link: link,
+                        time: time,
+                        saved: false,
+                    };
+        
+                    db.Article.update(insertData, {upsert:true})
+                        .then(function (dbArticle) {
+                            // View the added result in the console
+                            // console.log(dbArticle);
+                        })
+                        .catch(function (err) {
+                            // If an error occurred, send it to the client
+                            return res.json(err);
+                        });
+                });
+            })
+
+
+
+
+        } else {
+            console.log("false") // collection does not exist
+            axios.get("https://www.charlotteobserver.com/").then(function (response) {
+
+                var $ = cheerio.load(response.data);
+                // console.log(response.data);
+        
+                $(".title-link-timestamp-macro ").each(function (i, element) {
+                    var title = $(element).find("a").text().trim();
+                    var link = $(element).find("a").attr("href");
+                    var time = $(element).find("time").text().trim();
+                    // console.log(`this is the title: ${title} at index ${i}.`)
+        
+                    var insertData = {
+                        title: title,
+                        link: link,
+                        time: time,
+                        saved: false,
+                    };
+        
+                    db.Article.create(insertData)
+                        .then(function (dbArticle) {
+                            // View the added result in the console
+                            // console.log(dbArticle);
+                        })
+                        .catch(function (err) {
+                            // If an error occurred, send it to the client
+                            return res.json(err);
+                        });
+                });
+            })
+        }
+    });
+// }
+});
+
+// checkfordatabase();
 
 // A GET route for scraping the echoJS website
-app.get("/scrape", function (req, res) {
+// app.get("/scrape", function (req, res) {
     //----------------------------------
-    axios.get("https://www.charlotteobserver.com/").then(function (response) {
+    // axios.get("https://www.charlotteobserver.com/").then(function (response) {
 
-        var $ = cheerio.load(response.data);
-        // console.log(response.data);
+    //     var $ = cheerio.load(response.data);
+    //     // console.log(response.data);
 
-        $(".title-link-timestamp-macro ").each(function (i, element) {
-            var title = $(element).find("a").text().trim();
-            var link = $(element).find("a").attr("href");
-            var time = $(element).find("time").text().trim();
-            // console.log(`this is the title: ${title} at index ${i}.`)
+    //     $(".title-link-timestamp-macro ").each(function (i, element) {
+    //         var title = $(element).find("a").text().trim();
+    //         var link = $(element).find("a").attr("href");
+    //         var time = $(element).find("time").text().trim();
+    //         // console.log(`this is the title: ${title} at index ${i}.`)
 
-            var insertData = {
-                title: title,
-                link: link,
-                time: time,
-                saved: false,
-            };
+    //         var insertData = {
+    //             title: title,
+    //             link: link,
+    //             time: time,
+    //             saved: false,
+    //         };
 
-            db.Article.create(insertData)
-                .then(function (dbArticle) {
-                    // View the added result in the console
-                    // console.log(dbArticle);
-                })
-                .catch(function (err) {
-                    // If an error occurred, send it to the client
-                    return res.json(err);
-                });
-        });
-    })
-});
+    //         db.Article.create(insertData)
+    //             .then(function (dbArticle) {
+    //                 // View the added result in the console
+    //                 // console.log(dbArticle);
+    //             })
+    //             .catch(function (err) {
+    //                 // If an error occurred, send it to the client
+    //                 return res.json(err);
+    //             });
+    //     });
+    // })
+// });
 
 
 
