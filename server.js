@@ -31,9 +31,9 @@ app.use(express.static("public"));
 // Connect to the Mongo DB
 // mongoose.connect("mongodb://localhost/homework18db", { useNewUrlParser: true });
 
-mongoose.connect(MONGODB_URI);
+// mongoose.connect(MONGODB_URI);
 
-// process.env.MONGODB_URI;
+process.env.MONGODB_URI;
 
 
 // Routes
